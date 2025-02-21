@@ -10,7 +10,7 @@ function Preorder(){
             </div>
             <div className='sub-container2'>
             <p>We are a platform that helps you fund your ideas and bring them to life.</p>
-            <p>© 2025</p>
+            <p className='copyright'>© 2025</p>
             </div>
         </div>
     );
