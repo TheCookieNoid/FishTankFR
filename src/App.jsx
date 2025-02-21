@@ -1,4 +1,4 @@
-import { useState } from 'react'
+
 import Preorder from './components/LandingPage/Pre-loader.jsx'
 function App() {
 
