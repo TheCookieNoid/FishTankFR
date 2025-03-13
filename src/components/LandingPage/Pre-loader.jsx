@@ -4,8 +4,10 @@ function Preorder(){
     return(
         <div className="main-container">
             <div className='sub-container1'>
+                <div className='top-elements'>
             <img src={Fish}  alt="hello"></img>
             <h2>0-100</h2>
+            </div>
             <h1>FishTankFR</h1>
             </div>
             <div className='sub-container2'>
