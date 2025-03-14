@@ -1,13 +1,22 @@
 * {
     margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
 }
+
 @font-face {
     font-family: Bebas;
     src: url(./components/assets/fonts/BebasNeue-Regular.ttf);
 }
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
 .main-container{
-    height: 300px;
-    width: 1366px;
     font-family: Bebas;
     display: flex;
     flex-wrap: wrap;
@@ -15,8 +24,6 @@
     text-align: center;
     display: grid;
     grid-template-rows: repeat(2,1fr);
-    position: relative;
-    top: 390px;
 }
 .sub-container1{
     height: 180px;
