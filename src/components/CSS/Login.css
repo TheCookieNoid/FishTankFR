@@ -1,0 +1,133 @@
+@font-face {
+    font-family: Bebas;
+    src: url(./components/assets/fonts/BebasNeue-Regular.ttf);
+}
+* {
+    background-color: black;
+    margin: 0%;
+    padding: 0%;
+    font-family: Bebas;
+}
+.All-INFO{
+    align-items: center;
+    width: auto;
+    height: auto;
+    display: flex;
+}
+.Name-logo-info{
+    margin-right: 150px;
+    height: 150px;
+}
+.Name-logo-info img{
+    position: relative;
+    top: 40px;
+}
+.Name-logo-info h1{
+    height: 150px;
+    color: white;
+    font-size: 160px;
+}
+.Name-logo-info p{
+    color: white;
+    font-size: 20px;
+    margin-left: 5px;
+    margin-top: 8px;
+}
+.square{
+    border-radius: 10px 10px 0 0;
+    margin-left: 120px;
+    margin-right: 50px;
+    margin-top: 100px;
+    background-color: rgb(248, 250, 252);
+    width: 320px;
+    height: 686px; 
+    display: grid;
+    grid-template-rows: repeat(2,0fr);
+    justify-content: center;
+    align-items: center;
+}
+.first{
+    font-size: 48px;
+    font-weight: 500;
+    margin-top: 280px;
+    color:black;
+    text-align: center;
+    background-color:rgb(248, 250, 252) ;
+}
+.second{
+    font-size: 48px;
+    font-weight: 500;
+    color:black;
+    text-align: center;
+    background-color:rgb(248, 250, 252) ;
+}
+.sign-up{
+    border: none;
+    border-radius: 15px;
+    color: white;
+    width: 250px;
+    height: 80px;
+    font-size: 50px;
+    margin-bottom: 100px;
+    margin-left: 5px;
+    padding-top: 5px;
+    justify-content: center;
+}
+.LOGIN{
+    border: none;
+    border-radius: 15px;
+    color: white;
+    width: 250px;
+    height: 80px;
+    font-size: 50px;
+    position: relative;
+    bottom: 90px;
+    margin-left: 5px;
+    padding-top: 5px;
+    justify-content: center;
+}
+.circle-1{
+    position: absolute;
+    top: 130px;
+    left: 970px;
+    background-color: rgb(217, 217, 217);
+    border-radius: 999px;
+    width: 70px;
+    height: 70px;
+}
+.circle-2{
+    position: absolute;
+    top: 130px;
+    left: 1130px;
+    background-color: rgb(217, 217, 217);
+    border-radius: 999px;
+    width: 70px;
+    height: 70px;
+}
+.circle-3{
+    position: absolute;
+    top: 200px;
+    left: 1050px;
+    background-color: rgb(217, 217, 217);
+    border-radius: 999px;
+    width: 70px;
+    height: 70px;
+}
+.circle-4{
+    position: absolute;
+    top: 250px;
+    left: 1150px;
+    background-color: rgb(217, 217, 217);
+    border-radius: 999px;
+    width: 70px;
+    height: 70px;
+}
+.circle-5{
+    position: absolute;
+    top: 310px;
+    left: 1000px;
+    background-color: rgb(217, 217, 217);
+    border-radius: 999px;
+    width: 70px;
+    height: 70px;
+}
