@@ -1,10 +1,10 @@
 
-import Preorder from './components/LandingPage/Pre-loader.jsx'
+import Preorder from './components/LandingPage/LoginPage.jsx';
+import Homepage from './components/LandingPage/HomePage.jsx';
 function App() {
 
     return(
         <>
-        <Preorder/>
         </>
     );
 }
