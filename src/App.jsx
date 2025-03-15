@@ -1,12 +1,19 @@
 
 import Preorder from './components/LandingPage/LandingPage.jsx';
 import Homepage from './components/LandingPage/HomePage.jsx';
-import Login from './components/LandingPage/LoginPage.jsx';
+import MainPage from './components/LandingPage/LoginPage.jsx';
+import { Routes,Route } from 'react-router-dom';
+import Login from './components/LandingPage/Login.jsx';
+
 function App() {
 
     return(
         <>
-        <Login/>
+        <MainPage/>
+        <Routes>
+            <Route path='/login'
+            element = {<Login/>}/>
+        </Routes>
         </>
     );
 }

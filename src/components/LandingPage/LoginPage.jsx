@@ -3,8 +3,8 @@ import Fish from "../assets/icon-fish-transpernt.png"
 import RandomIMG from "../assets/Random.png"
 import Hesienberg from "../assets/hesienberg.png"
 import Social from "../assets/social.png"
-
-function Login(){
+import { Link } from "react-router-dom";
+function MainPage(){
     return(
         <div className="All-INFO">
             <div className="Name-logo-info">
@@ -32,13 +32,11 @@ function Login(){
                 <button className="sign-up">
                     SIGN UP
                     </button>
-                <button className="LOGIN">
-                    LOGIN
-                    </button>
+                    <Link to='/login'><button className="LOGIN">LOGIN</button></Link>
                 </div>
             
         </div>
     );
 
 }
-export default Login
+export default MainPage
