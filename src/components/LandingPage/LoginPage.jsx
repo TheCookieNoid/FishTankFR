@@ -1,5 +1,8 @@
 import "../CSS/Login.css"
 import Fish from "../assets/icon-fish-transpernt.png"
+import RandomIMG from "../assets/Random.png"
+import Hesienberg from "../assets/hesienberg.png"
+import Social from "../assets/social.png"
 
 function Login(){
     return(
@@ -13,11 +16,13 @@ function Login(){
                 </p>
             </div>
             <div className="square">
-            <div className="circle-1"></div>
-            <div className="circle-2"></div>
-            <div className="circle-3"></div>
-            <div className="circle-4"></div>
-            <div className="circle-5"></div>
+            <div className="circle-1"><img src={RandomIMG}></img></div>
+            <div className="circle-2"><img src={RandomIMG}></img></div>
+            <div className="circle-3"><img src={Social}></img></div>
+            <div className="circle-4"><img src={Hesienberg}></img></div>
+            <div className="circle-5"><img src={RandomIMG}></img></div>
+            <div className="circle-6"><img src={RandomIMG}></img></div>
+            <div className="circle-7"><img src={RandomIMG}></img></div>
                 <h1 className="first">
                     START YOUR 
                 </h1>

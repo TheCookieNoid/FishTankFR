@@ -17,6 +17,7 @@
 .Name-logo-info{
     margin-right: 150px;
     height: 150px;
+    margin-bottom: 150px;
 }
 .Name-logo-info img{
     position: relative;
@@ -52,14 +53,16 @@
     margin-top: 280px;
     color:black;
     text-align: center;
-    background-color:rgb(248, 250, 252) ;
+    background-color: transparent;
+    z-index: 1;
 }
 .second{
     font-size: 48px;
     font-weight: 500;
     color:black;
     text-align: center;
-    background-color:rgb(248, 250, 252) ;
+    background-color: transparent;
+    z-index: 999;
 }
 .sign-up{
     border: none;
@@ -94,15 +97,23 @@
     border-radius: 999px;
     width: 70px;
     height: 70px;
+    filter: brightness(90%) opacity(1);
+}
+.circle-1 img{
+    border-radius: 100px;
 }
 .circle-2{
     position: absolute;
     top: 130px;
-    left: 1130px;
+    left: 1150px;
     background-color: rgb(217, 217, 217);
     border-radius: 999px;
     width: 70px;
     height: 70px;
+    filter: brightness(90%);
+}
+.circle-2 img{
+    border-radius: 100px;
 }
 .circle-3{
     position: absolute;
@@ -112,8 +123,31 @@
     border-radius: 999px;
     width: 70px;
     height: 70px;
+    filter: blur(1px) opacity(1);
+}
+.circle-3 img{
+    border-radius: 100px;
+    width: 70px;
+    height: 70px;
+    border: none;
 }
 .circle-4{
+    position: absolute;
+    top: 290px;
+    left: 1000px;
+    background-color: rgb(217, 217, 217);
+    border-radius: 999px;
+    width: 70px;
+    height: 70px;
+    filter: blur(2px) opacity(0.95);
+}
+.circle-4 img{
+    border-radius: 100px;
+    width: 70px;
+    height: 70px;
+    border: none;
+}
+.circle-5{
     position: absolute;
     top: 250px;
     left: 1150px;
@@ -121,13 +155,34 @@
     border-radius: 999px;
     width: 70px;
     height: 70px;
+    filter: blur(2px) opacity(0.95);
 }
-.circle-5{
+.circle-5 img{
+    border-radius: 100px;
+}
+.circle-6{
     position: absolute;
-    top: 310px;
-    left: 1000px;
+    top: 350px;
+    left: 1150px;
     background-color: rgb(217, 217, 217);
     border-radius: 999px;
     width: 70px;
     height: 70px;
+    filter: blur(4px) opacity(0.7);
+}
+.circle-6 img{
+    border-radius: 100px;
+}
+.circle-7{
+    position: absolute;
+    top: 400px;
+    left: 980px;
+    background-color: rgb(217, 217, 217);
+    border-radius: 999px;
+    width: 70px;
+    height: 70px;
+    filter: blur(4px) opacity(0.7);
+}
+.circle-7 img{
+    border-radius: 100px;
 }
