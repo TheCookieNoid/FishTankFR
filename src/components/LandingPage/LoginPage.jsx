@@ -32,7 +32,9 @@ function MainPage(){
                 <button className="sign-up">
                     SIGN UP
                     </button>
-                    <Link to='/login'><button className="LOGIN">LOGIN</button></Link>
+                    <button className="LOGIN">
+                        LOGIN
+                        </button>
                 </div>
             
         </div>

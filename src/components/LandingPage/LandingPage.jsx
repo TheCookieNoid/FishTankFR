@@ -2,7 +2,7 @@ import Fish from '../assets/icons-fish.jpg'
 
 function Preorder(){
     return(
-        <div className="main-container">
+        <div className="main-box">
             <div className='sub-container1'>
                 <div className='top-elements'>
             <img src={Fish}  alt="hello"></img>

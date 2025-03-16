@@ -16,7 +16,7 @@ body{
     height: 100vh;
 }
 
-.main-container{
+.main-box{
     font-family: Bebas;
     display: flex;
     flex-wrap: wrap;
