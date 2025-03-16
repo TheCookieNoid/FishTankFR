@@ -1,0 +1,134 @@
+*{
+    padding: 0%;
+    margin: 0%;
+}
+body{
+    overflow-y: hidden;
+}
+.main-container{
+    width: 170vh;
+}
+.Name-logo{
+    align-items: center;
+    margin-bottom: 70px;
+}
+.Name-logo h1{
+    text-align: center;
+    height: 180px;
+    color: white;
+    font-size: 175px;
+}
+.Name-logo img{
+    background: transparent;
+    position: relative;
+    top: 40px;
+    left: 330px;
+}
+.user-pass-start{
+    text-align: center;
+    margin-top: 85px;
+    margin-bottom: 40px;
+}
+.username{
+    width: 500px;
+    height: 70px;
+    border-radius: 40px;
+    color: black;    
+    background-color: white;
+    border: none;
+    padding-left: 50px;
+    padding-top: 3px;
+    font-weight: 200;
+    font-size:  30px;
+}
+.username::placeholder{
+    color: rgb(122, 122, 122);
+    opacity: 1;
+    font-size: 30px;
+}
+.user img{
+    position: absolute;
+    border-radius: 0px;
+    padding-top: 18.5px;
+    padding-left: 10px;
+    background-color: transparent;
+}
+.pass{
+    margin-top: 30px;
+}
+.password{
+    width: 500px;
+    height: 70px;
+    border-radius: 40px;
+    color: black;    
+    background-color: white;
+    border: none;
+    padding-left: 50px;
+    padding-top: 3px;
+    font-weight: 200;
+    font-size:  30px;
+}
+.password::placeholder{
+    color: rgb(122, 122, 122);
+    opacity: 1;
+    font-size: 30px;
+}
+.pass img{
+    position: absolute;
+    border-radius: 0px;
+    padding-top: 18.5px;
+    padding-left: 10px;
+    background-color: transparent;
+}
+.start{
+    width: 500px;
+    height: 70px;
+    text-align: center;
+    margin-top: 30px;
+    border-radius: 40px;
+    color: black;    
+    background-color: rgb(122, 122, 122);
+    border: none;
+    padding-left: 0px;
+    padding-top: 8px;
+    font-weight: 500;
+    font-size:  45px;
+    -webkit-text-stroke: 1px black; 
+    -webkit-text-fill-color: white;
+    cursor: pointer;
+}
+
+.create{
+    cursor: default;
+    margin-left:280px ;
+    color: white;
+    font-size: 32px;
+    width: 500px;
+    padding-left: 120px;
+    margin-top:20px;
+}
+.login-span{
+    cursor: pointer;
+    color: rgb(153, 207, 224);
+}
+.login-span:hover{
+    color: rgb(109, 188, 212);
+}
+.footer{
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    color: white;
+    
+}
+.information{
+    width: 400px;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+.copyright{
+    margin-top: 20px;
+    margin-right: 10px;
+}

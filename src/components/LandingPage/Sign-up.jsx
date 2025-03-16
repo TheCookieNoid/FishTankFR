@@ -1,5 +1,7 @@
 import '../CSS/Sign-up.css'
-
+import Fish from '../assets/icon-fish-transpernt.png'
+import User from '../assets/user.png'
+import Pass from '../assets/password.png'
 function SignUP(){
     return(
         <div className='main-container'>
@@ -19,10 +21,7 @@ function SignUP(){
                     <button className='start'>
                        GET STARTED
                        </button>
-                       <div className='create-forgot'>
-                   <h1 className='create'>CREATE ACCOUNT?</h1>
-                   <h1 className='forget'>FORGET PASSWORD?</h1>
-                   </div>
+                   <h2 className='create'>Already have an account? <span className='login-span'>Login</span> </h2>
                    </div>
                    <div className='footer'>
                        <div className='information'>
