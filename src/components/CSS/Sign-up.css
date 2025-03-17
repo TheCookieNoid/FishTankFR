@@ -99,15 +99,14 @@ body{
 }
 
 .create{
-    cursor: default;
-    margin-left:280px ;
-    color: white;
-    font-size: 32px;
-    width: 500px;
-    padding-left: 120px;
-    margin-top:20px;
+cursor: default;
+width: 800px;
+color: white;
+font-size: 32px;
+margin-top: -10px;
 }
 .login-span{
+    width: 500px;
     cursor: pointer;
     color: rgb(153, 207, 224);
 }
@@ -119,7 +118,7 @@ body{
     justify-content: space-between;
     font-size: 18px;
     color: white;
-    
+    margin-top: 25px;
 }
 .information{
     width: 400px;

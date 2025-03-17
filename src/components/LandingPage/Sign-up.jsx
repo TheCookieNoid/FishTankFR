@@ -21,8 +21,8 @@ function SignUP(){
                     <button className='start'>
                        GET STARTED
                        </button>
-                   <h2 className='create'>Already have an account? <span className='login-span'>Login</span> </h2>
                    </div>
+                   <h2 className='create'>Already have an account? <span className='login-span'>Login</span> </h2>
                    <div className='footer'>
                        <div className='information'>
                                <h2>ABOUT US</h2>
