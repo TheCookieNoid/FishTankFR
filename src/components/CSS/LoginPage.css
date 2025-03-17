@@ -104,8 +104,8 @@
     margin-left: 10px;
 }
 .create{
-    width: 300px;
-    cursor: pointer;
+    width: 500px;
+    cursor: default;
     padding: 0%;
     margin-left: 420px;
 }
