@@ -3,13 +3,11 @@
     src: url(./assets/fonts/BebasNeue-Regular.ttf);
 }
 
-
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
 
 :root{
     --bg-color: #F8FAFC;
@@ -25,6 +23,7 @@ body{
     background-color: var(--bg-color);
     font-family: bebas;
     overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .navbar{

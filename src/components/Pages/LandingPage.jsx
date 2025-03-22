@@ -1,3 +1,4 @@
+import '../CSS/LandingPage.css'
 import fishLogoBlack from '../assets/icons8-fish-50.png';
 import project1 from '../assets/computerArt.png';
 import project2 from '../assets/milkAndHoney.png';
