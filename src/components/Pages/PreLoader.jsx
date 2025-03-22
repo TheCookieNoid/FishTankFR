@@ -1,6 +1,6 @@
 import Fish from '../assets/icons-fish.jpg'
 
-function Preorder(){
+function PreLoader(){
     return(
         <div className="main-box">
             <div className='sub-container1'>
@@ -17,4 +17,4 @@ function Preorder(){
         </div>
     );
 }
-export default Preorder
+export default PreLoader
