@@ -8,7 +8,8 @@ import Login from './components/LandingPage/Login.jsx';
 function App() {
 
     return(
-        <>
+    <>
+    <Login />
     </>
     );
 }

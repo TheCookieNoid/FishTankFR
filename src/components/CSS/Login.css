@@ -1,188 +1,113 @@
 @font-face {
-    font-family: Bebas;
-    src: url(./components/assets/fonts/BebasNeue-Regular.ttf);
+    font-family: bebas;
+    src: url(../assets/fonts/BebasNeue-Regular.ttf);
 }
-* {
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
     background-color: black;
-    margin: 0%;
-    padding: 0%;
-    font-family: Bebas;
-}
-.All-INFO{
-    align-items: center;
-    width: auto;
-    height: auto;
     display: flex;
+    justify-content: center;
+    font-family: bebas;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
-.Name-logo-info{
-    margin-right: 150px;
-    height: 150px;
-    margin-bottom: 150px;
-}
-.Name-logo-info img{
-    position: relative;
-    top: 40px;
-}
-.Name-logo-info h1{
-    height: 150px;
-    color: white;
-    font-size: 160px;
-}
-.Name-logo-info p{
-    color: white;
-    font-size: 20px;
-    margin-left: 5px;
-    margin-top: 8px;
-}
-.square{
-    border-radius: 20px 20px 0 0;
-    margin-left: 120px;
-    margin-right: 50px;
-    margin-top: 100px;
-    background-color: rgb(248, 250, 252);
-    width: 320px;
-    height: 686px; 
-    display: grid;
-    grid-template-rows: repeat(2,0fr);
+
+.logo-container{
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-.first{
-    font-size: 48px;
-    font-weight: 500;
-    margin-top: 280px;
-    color:black;
-    text-align: center;
-    background-color: transparent;
-    z-index: 1;
-}
-.second{
-    font-size: 48px;
-    font-weight: 500;
-    color:black;
-    text-align: center;
-    background-color: transparent;
-    z-index: 999;
-}
-.sign-up{
-    border: none;
-    border-radius: 15px;
-    color: white;
-    width: 250px;
-    height: 80px;
-    font-size: 50px;
-    margin-bottom: 100px;
-    margin-left: 5px;
-    padding-top: 5px;
-    justify-content: center;
-}
-.LOGIN{
-    border: none;
-    border-radius: 15px;
-    color: white;
-    width: 250px;
-    height: 80px;
-    font-size: 50px;
+
+.logo-container img{
+    background: transparent;
     position: relative;
-    bottom: 90px;
-    margin-left: 5px;
-    padding-top: 5px;
+    top: 33px;
+    left: -194px;
+    height: 50px;
+    width: 50px;
+}
+
+.logo-container h1{
+    font-size: 120px;
+}
+
+.credentials-container{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.credentials-container input{
+    font-family: bebas;
+    background-color: white;
+    height: 50px;
+    width: 450px;
+    border-radius: 15px;
+    border: 1px solid var(--btn-clr);
+    padding: 20px;
+    font-size: 20px;
+}
+
+.credentials-container input::placeholder{
+    color: black;
+}
+
+.getStarted-button{
+    font-family: bebas;
+    color: white;
+    height: 50px;
+    width: 450px;
+    border-radius: 15px;
+    background-color: black;
+    font-size: 32px;
+    border: 1px solid white;
+
+}
+
+.getStarted-button:hover{
+    cursor: pointer;
+    color: black;
+    background-color: white;
+}
+
+.redirectToLogin-container{
+    margin-top: 10px;
+    display: flex;
     justify-content: center;
 }
-.circle-1{
-    position: absolute;
-    top: 130px;
-    left: 970px;
-    background-color: rgb(217, 217, 217);
-    border-radius: 999px;
-    width: 70px;
-    height: 70px;
-    filter: brightness(90%) opacity(1);
+
+.redirectToLogin-container a{
+    text-decoration: none;
+    color: orange;
 }
-.circle-1 img{
-    border-radius: 100px;
+
+.extraDetails-container{
+    margin-top: 50px;
+    display: flex;
+    gap: 10px;
 }
-.circle-2{
-    position: absolute;
-    top: 130px;
-    left: 1150px;
-    background-color: rgb(217, 217, 217);
-    border-radius: 999px;
-    width: 70px;
-    height: 70px;
-    filter: brightness(90%);
+
+.extraDetails-container a{
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+    font-weight: 100;
 }
-.circle-2 img{
-    border-radius: 100px;
+
+h2{
+    font-weight: 100;
 }
-.circle-3{
-    position: absolute;
-    top: 200px;
-    left: 1050px;
-    background-color: rgb(217, 217, 217);
-    border-radius: 999px;
-    width: 70px;
-    height: 70px;
-    filter: blur(1px) opacity(1);
-}
-.circle-3 img{
-    border-radius: 100px;
-    width: 70px;
-    height: 70px;
-    border: none;
-}
-.circle-4{
-    position: absolute;
-    top: 290px;
-    left: 1000px;
-    background-color: rgb(217, 217, 217);
-    border-radius: 999px;
-    width: 70px;
-    height: 70px;
-    filter: blur(2px) opacity(0.95);
-}
-.circle-4 img{
-    border-radius: 100px;
-    width: 70px;
-    height: 70px;
-    border: none;
-}
-.circle-5{
-    position: absolute;
-    top: 250px;
-    left: 1150px;
-    background-color: rgb(217, 217, 217);
-    border-radius: 999px;
-    width: 70px;
-    height: 70px;
-    filter: blur(2px) opacity(0.95);
-}
-.circle-5 img{
-    border-radius: 100px;
-}
-.circle-6{
-    position: absolute;
-    top: 350px;
-    left: 1150px;
-    background-color: rgb(217, 217, 217);
-    border-radius: 999px;
-    width: 70px;
-    height: 70px;
-    filter: blur(4px) opacity(0.7);
-}
-.circle-6 img{
-    border-radius: 100px;
-}
-.circle-7{
-    position: absolute;
-    top: 400px;
-    left: 980px;
-    background-color: rgb(217, 217, 217);
-    border-radius: 999px;
-    width: 70px;
-    height: 70px;
-    filter: blur(4px) opacity(0.7);
-}
-.circle-7 img{
-    border-radius: 100px;
+
+h3{
+    font-weight: 100;
 }

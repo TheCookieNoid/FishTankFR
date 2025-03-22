@@ -1,44 +1,34 @@
-import '../CSS/LoginPage.css'
+import '../CSS/Login.css'
 import Fish from '../assets/icon-fish-transpernt.png'
-import User from '../assets/user.png'
-import Pass from '../assets/password.png'
+
 function Login(){
 
     return(
         <div className='main-container'>
-            <div className='Name-logo'>
-            <img src={Fish}></img>
-            <h1>FISHTANKFR</h1>
-            </div>
-            <div className='user-pass-start'>
-                <div className='user'>
-                    <img src={User}></img>
-             <input className='username' placeholder='USERNAME'></input>
-             </div>
-                <div className='pass'>
-                    <img src={Pass}></img>
-             <input className='password' placeholder='PASSWORD'></input>
-             </div>
-             <button className='start'>
-                GET STARTED
-                </button>
-                <div className='create-forgot'>
-            <h1 className='create'>CREATE ACCOUNT?</h1>
-            <h1 className='forget'>FORGET PASSWORD?</h1>
-            </div>
-            </div>
-            <div className='footer'>
-                <div className='information'>
-                        <h2>ABOUT US</h2>
-                        <h2>PRIVACY POLICY</h2>
-                        <h2>TERMS OF USE</h2>
+                <div className='logo-container'>
+                    <img src={Fish} alt="fishtankfrLogo"/>
+                    <h1 style={{color: 'white'}}>FISHTANKFR</h1>
                 </div>
-                <div className='copyright'>
-              <h2>© 2025 | Fishtankfr</h2>
+        
+                <div className='credentials-container'>
+                    <input type="text" name="username" id="username-input" placeholder='USERNAME' required/>
+                    <input type="password" name="password" id="password-input" placeholder='PASSWORD' required/>
+                    <button className='getStarted-button'>GET STARTED</button>
                 </div>
+        
+                <div className='redirectToLogin-container'>
+                    <h2 style={{color: 'white'}}>NEVER HAD AN ACCOUNT? <a href="">SIGN-UP</a></h2>
+                </div>
+        
+                <div className='extraDetails-container'>
+                    <h3><a href="">ABOUT US</a></h3>
+                    <h3><a href="">PRIVACY POLICY</a></h3>
+                    <h3><a href="">TERMS OF USE</a></h3>
+                </div>
+        
+                <h3 style={{color: 'white'}}>© 2025 | Fishtankfr</h3>
+        
             </div>
-        </div>
-
     );
 }
 

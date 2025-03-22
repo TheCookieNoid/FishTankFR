@@ -2,39 +2,36 @@ import '../CSS/Sign-up.css'
 import Fish from '../assets/icon-fish-transpernt.png'
 import User from '../assets/user.png'
 import Pass from '../assets/password.png'
+
 function SignUP(){
     return(
-        <div className='main-container'>
-                   <div className='Name-logo'>
-                   <img src={Fish}></img>
-                   <h1>FISHTANKFR</h1>
-                   </div>
-                   <div className='user-pass-start'>
-                       <div className='user'>
-                           <img src={User}></img>
-                    <input className='username' placeholder='USERNAME'></input>
-                    </div>
-                       <div className='pass'>
-                           <img src={Pass}></img>
-                    <input className='password' placeholder='PASSWORD'></input>
-                    </div>
-                    <button className='start'>
-                       GET STARTED
-                       </button>
-                   </div>
-                   <h2 className='create'>Already have an account? <span className='login-span'>Login</span> </h2>
-                   <div className='footer'>
-                       <div className='information'>
-                               <h2>ABOUT US</h2>
-                               <h2>PRIVACY POLICY</h2>
-                               <h2>TERMS OF USE</h2>
-                       </div>
-                       <div className='copyright'>
-                     <h2>© 2025 | Fishtankfr</h2>
-                       </div>
-                   </div>
-               </div>
-    );
+    <div className='main-container'>
+        <div className='logo-container'>
+            <img src={Fish} alt="fishtankfrLogo"/>
+            <h1 style={{color: 'white'}}>FISHTANKFR</h1>
+        </div>
+
+        <div className='credentials-container'>
+            <input type="text" name="username" id="username-input" placeholder='USERNAME' required/>
+            <input type="password" name="password" id="password-input" placeholder='PASSWORD' required/>
+            <input type="password" name='passwordReconfirm' id='passwordReconfirm-input' placeholder='RE-ENTER PASSWORD' required/>
+            <button className='getStarted-button'>GET STARTED</button>
+        </div>
+
+        <div className='redirectToLogin-container'>
+            <h2 style={{color: 'white'}}>ALREADY HAVE AN ACCOUNT? <a href="">LOGIN</a></h2>
+        </div>
+
+        <div className='extraDetails-container'>
+            <h3><a href="">ABOUT US</a></h3>
+            <h3><a href="">PRIVACY POLICY</a></h3>
+            <h3><a href="">TERMS OF USE</a></h3>
+        </div>
+
+        <h3 style={{color: 'white'}}>© 2025 | Fishtankfr</h3>
+
+    </div>
+)
 }
 
 export default SignUP
