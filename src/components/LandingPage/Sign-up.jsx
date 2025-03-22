@@ -2,6 +2,7 @@ import '../CSS/Sign-up.css'
 import Fish from '../assets/icon-fish-transpernt.png'
 import User from '../assets/user.png'
 import Pass from '../assets/password.png'
+import { Link } from 'react-router-dom'
 
 function SignUP(){
     return(
@@ -19,7 +20,7 @@ function SignUP(){
         </div>
 
         <div className='redirectToLogin-container'>
-            <h2 style={{color: 'white'}}>ALREADY HAVE AN ACCOUNT? <a href="">LOGIN</a></h2>
+            <h2 style={{color: 'white'}}>ALREADY HAVE AN ACCOUNT?<Link to='/' style={{ textDecoration: 'none' }}> <span>LOGIN</span></Link></h2>
         </div>
 
         <div className='extraDetails-container'>

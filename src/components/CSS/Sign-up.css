@@ -83,11 +83,10 @@ body{
     justify-content: center;
 }
 
-.redirectToLogin-container a{
+.redirectToLogin-container span{
     text-decoration: none;
     color: orange;
 }
-
 .extraDetails-container{
     margin-top: 50px;
     display: flex;

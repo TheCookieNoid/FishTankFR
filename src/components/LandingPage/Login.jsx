@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import '../CSS/Login.css'
 import Fish from '../assets/icon-fish-transpernt.png'
 
@@ -17,7 +18,7 @@ function Login(){
                 </div>
         
                 <div className='redirectToLogin-container'>
-                    <h2 style={{color: 'white'}}>NEVER HAD AN ACCOUNT? <a href="">SIGN-UP</a></h2>
+                    <h2 style={{color: 'white'}}>NEVER HAD AN ACCOUNT? <Link to='sign-up' style={{ textDecoration: 'none' }}> <span>SIGN-UP</span> </Link> </h2>
                 </div>
         
                 <div className='extraDetails-container'>
