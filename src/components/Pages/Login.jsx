@@ -4,6 +4,8 @@ import Fish from '../assets/icon-fish-transpernt.png'
 
 function Login(){
 
+    document.body.style.backgroundColor = "black";
+
     return(
         <div className='main-container'>
                 <div className='logo-container'>
