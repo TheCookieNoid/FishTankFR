@@ -8,6 +8,7 @@ import SignUP from './components/Pages/Sign-up.jsx'
 import Login from './components/Pages/Login.jsx'
 import LandingPage from './components/Pages/LandingPage.jsx'
 import CategoryPage from './components/Pages/CategoriesPage.jsx'
+import ActualSpecificCategoryPage from './components/Pages/SpecificCategoryPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
   {
     path:'/category-page',
     element:<CategoryPage/>
+  },
+  {
+    path:'/specific-category-page',
+    element:<ActualSpecificCategoryPage/>
   }
 ]);
 

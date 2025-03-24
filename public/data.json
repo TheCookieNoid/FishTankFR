@@ -1,0 +1,26 @@
+{
+    "users": [
+      {
+        "id": 1,
+        "name": "John Doe",
+        "email": "john@example.com",
+        "profilePicture": "https://via.placeholder.com/150",
+        "category": "developer"
+      },
+      {
+        "id": 2,
+        "name": "Jane Smith",
+        "email": "jane@example.com",
+        "profilePicture": "https://via.placeholder.com/150",
+        "category": "designer"
+      },
+      {
+        "id": 3,
+        "name": "Alice Brown",
+        "email": "alice@example.com",
+        "profilePicture": "https://via.placeholder.com/150",
+        "category": "developer"
+      }
+    ]
+  }
+  
