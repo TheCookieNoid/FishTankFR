@@ -1,0 +1,100 @@
+*{
+    border: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.main-logo-1 h1{
+    position: absolute;
+    left: 20px;
+    top: 0px;
+}
+
+.navbar-1 ul{
+    position: absolute;
+    top: 85px;
+    left: 700px;
+}
+
+.carousel-container {
+    position: relative;
+    top: -7px;
+    width: 100%;
+    max-width: 1366px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    white-space: nowrap;
+    border-radius: 10px;
+    background: #F8FAFC;
+    padding: 20px;
+    text-align: center;
+}
+
+.carousel-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.carousel-container::-webkit-scrollbar-track {
+    background: #ddd;
+    border-radius: 10px;
+}
+
+.carousel-container::-webkit-scrollbar-thumb {
+    background: #007bff;
+    border-radius: 10px;
+}
+
+.carousel-content {
+    display: flex;
+    gap: 20px;
+}
+
+.carousel-item {
+    min-width: 800px;
+    height: 455px;
+    padding: 20px;
+    color: #F8FAFC;
+    text-align: center;
+    font-size: 48px;
+    border-radius: 10px;
+}
+
+#content-1{
+    background: url(../assets/CategoryImages/Art.png);
+    background-position: center;
+}
+
+#content-2{
+    background: url(../assets/CategoryImages/Crafts.png);
+    background-position: center;
+}
+
+#content-3{
+    background: url(../assets/CategoryImages/Technology.png );
+    background-position: center;
+}
+
+#content-4{
+    background: url(../assets/CategoryImages/Fashion.png);
+    background-position: center;
+}
+
+#content-5{
+    background: url(../assets/CategoryImages/Film.png);
+    background-position: center;
+}
+
+#content-6{
+    background: url(../assets/CategoryImages/Music.png);
+    background-position: center;
+}
+
+#content-7{
+    background: url(../assets/CategoryImages/Photography.png);
+    background-position: center;
+}
+
+#content-8{
+    background: url(../assets/CategoryImages/Games.png);
+    background-position: center;
+}

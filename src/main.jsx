@@ -7,6 +7,7 @@ import App from './App.jsx'
 import SignUP from './components/Pages/Sign-up.jsx'
 import Login from './components/Pages/Login.jsx'
 import LandingPage from './components/Pages/LandingPage.jsx'
+import CategoryPage from './components/Pages/CategoriesPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path:'/landing-page',
     element:<LandingPage/>
+  },
+  {
+    path:'/category-page',
+    element:<CategoryPage/>
   }
 ]);
 
