@@ -1,0 +1,42 @@
+{
+    "users": [
+        {
+            "username" : "dhanuJodd",
+            "email" : "dhanuJodd10@gmail.com",
+            "profilePicture" : "https://i.pinimg.com/originals/68/6a/ed/686aed5155366255186b560c9698bb54.jpg",
+            "bio" : "Hello Mr.Abdul, yeh call utha li jiye, aapke chaahne wala aapka intezaar karra hai",
+            "location" : "bihar",
+            "followers" : "69",
+            "campaigns" : [
+            {
+                "id" : "1",
+                "title" : "pleasePaiseDedo",
+                "description" : "mai gareeb hu aur yeh project boht mehenga hai please paise dedo",
+                "requiredAmount" : "55",
+                "amountGenerated" : "1",
+                "category" : "crafts",
+                "daysLeft" : "3", "_comment" : "max only 30 days for a project",
+                "mainImage" : "https://wallpapercave.com/wp/wp13236673.png",
+                "image-1" : "https://wallpapercave.com/wp/wp13236673.png",
+                "image-2" : "https://wallpapercave.com/wp/wp13236673.png",
+                "image-3" : "https://wallpapercave.com/wp/wp13236673.png",
+                "image-4" : "https://wallpapercave.com/wp/wp13236673.png"
+            },
+            {
+                "id" : "2",
+                "title" : "merekoPaiseChaiyePlease",
+                "description" : "mai gareeb hu aur yeh project boht mehenga hai please paise dedo",
+                "requiredAmount" : "69",
+                "amountGenerated" : "4",
+                "category" : "technology",
+                "daysLeft" : "29", "_comment" : "max only 30 days for a project",
+                "mainImage" : "https://wallpapercave.com/wp/wp13236673.png",
+                "image-1" : "https://wallpapercave.com/wp/wp13236673.png",
+                "image-2" : "https://wallpapercave.com/wp/wp13236673.png",
+                "image-3" : "https://wallpapercave.com/wp/wp13236673.png",
+                "image-4" : "https://wallpapercave.com/wp/wp13236673.png"
+            }
+            ]
+        }
+    ]
+}

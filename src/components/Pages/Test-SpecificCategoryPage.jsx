@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import projectMainImage from '../assets/milkAndHoney.png'
+import Random from '../assets/Random.png'
+import { flushSync } from "react-dom";
 
 const SpecificCategoryPage = () => {
     const [users, setUsers] = useState([]);
@@ -31,16 +34,24 @@ const SpecificCategoryPage = () => {
                 <button onClick={() => setSelectedCategory("designer")} style={buttonStyle}>Designer</button>
                 <button onClick={() => setSelectedCategory("manager")} style={buttonStyle}>Manager</button>
             </div>
-
+            <div style={{display: "flex", gap: "20px"}}>
             {users.length === 0 ? <p>No users found in this category.</p> : (
                 users.map((user) => (
-                    <div key={user.id} style={cardStyle}>
-                        <img src={user.profilePicture} alt={user.name} style={imageStyle} />
-                        <h3>{user.name}</h3>
-                        <p>Email: {user.email}</p>
+                    <div style={{display: "flex", flexDirection: "column", gap: "10px", justifyContent: "center", position: "relative"}} key={user.id}>
+                        <img src={campaign.mainImage} style={{width: "400px", height: "250px"}} alt="projectMainImage"/>
+                        <img src={user.profilePicture} style={{width: "60px", height: "60px", borderRadius: "50%"}} alt="userProfileImage"/>
+                            <div className="content-container" style={{position: "absolute", top: "260px", left: "70px", display: "flex", flexDirection : "column", alignItems : "start"}}>
+                                <p className="project-title" style={{fontSize: "32px"}}>{campaign.title}</p>
+                                <p className="user-ID" style={{fontSize: "20px"}}>{user.username}</p>
+                            </div>
+                            <div className="extra-content-container" style={{fontSize: "24px", position: "absolute", top: "260px", left: "320px", display : "flex", flexDirection: "column", alignItems: "end"}}>
+                                <p className="time-remaining">{campaign.daysLeft}</p>
+                                <p className="campaign-funded">{campaign.amountGenerated}</p>
+                            </div>
                     </div>
                 ))
             )}
+            </div>
         </div>
     );
 };
@@ -54,20 +65,6 @@ const buttonStyle = {
     color: "white",
     borderRadius: "5px",
     cursor: "pointer"
-};
-
-const cardStyle = {
-    border: "1px solid #ddd",
-    padding: "20px",
-    margin: "10px auto",
-    width: "300px",
-    borderRadius: "10px",
-    background: "#f9f9f9"
-};
-
-const imageStyle = {
-    width: "100px",
-    borderRadius: "50%"
 };
 
 export default SpecificCategoryPage;
