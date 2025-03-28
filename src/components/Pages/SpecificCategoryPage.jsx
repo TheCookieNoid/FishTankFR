@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import fishLogoBlack from '../assets/icons-fish.jpg'
 import '../CSS/SpecificCategoryPage.css'
 import '../jsFiles/dropdown.js'
+import Footer from "../../new-components/Footer.jsx"
 
 function ActualSpecificCategoryPage(){
 
@@ -60,7 +61,7 @@ function ActualSpecificCategoryPage(){
         </div>
         <h2 className="second-half">CATEGORY</h2>
 
-        <div style={{display: "flex", gap: "20px"}} className="campaigns-container">
+        <div style={{display: "flex", gap: "20px",position: "relative", top: "300px", flexWrap: "wrap"}} className="campaigns-container">
             {users.length === 0 ? <p>No users found in this category.</p> : (
                 users.map((user) => (
                     <div style={{display: "flex", flexDirection: "column", gap: "10px", justifyContent: "center", position: "relative"}} key={user.id}>
@@ -77,7 +78,7 @@ function ActualSpecificCategoryPage(){
                     </div>
                 ))
             )}
-            </div>
+        </div>
     </div>
 )
 }
