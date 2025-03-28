@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import fishLogoBlack from '../assets/icons-fish.jpg'
 import '../CSS/SpecificCategoryPage.css'
 import '../jsFiles/dropdown.js'
-import Footer from "../../new-components/Footer.jsx"
 
 function ActualSpecificCategoryPage(){
 
