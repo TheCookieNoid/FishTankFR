@@ -3,3 +3,86 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+.project-details{
+    position: absolute;
+    top: 180px;
+    left: 20px;
+}
+
+.project-details #project-title{
+    width: 500px;
+    height: 300px;
+    border-radius: 20px;
+}
+
+.user-details{
+    color: white;
+    display: flex;
+    position: absolute;
+    top: 0px;
+    left: 430px;
+    gap: 30px;
+    margin-left: 100px;
+    align-items: center;
+}
+
+.user-details h1{
+    width: 120px;
+    font-weight: 100;
+}
+
+.user-details img{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+.user-details h2{
+    width: 120px;
+}
+
+.message-container{
+    background-color: rgb(150, 150, 150);
+    color: white;
+    width: 500px;
+    font-size: 24px;
+    padding: 12px;
+    border-radius: 20px;
+    position: absolute;
+    top: 300px;
+    left: 550px;
+}
+
+.price-button-container{
+    color: white;
+    display: flex;
+    gap: 30px;
+    position: absolute;
+    left: 20px;
+    top: 520px;
+}
+
+.price-button-container button{
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 20px;
+}
+
+.checkout-container{
+    color: white;
+    position: absolute;
+    top: 510px;
+}
+
+.checkout-container p{
+    font-size: 24px;
+}
+
+.checkout-container button{
+    padding: 12px;
+    background-color: #66FF82;
+    border-radius: 8px;
+    width: 200px;
+    font-size: 24px;
+}
