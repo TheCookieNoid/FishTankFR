@@ -9,6 +9,8 @@ import Login from './components/Pages/Login.jsx'
 import LandingPage from './components/Pages/LandingPage.jsx'
 import CategoryPage from './components/Pages/CategoriesPage.jsx'
 import ActualSpecificCategoryPage from './components/Pages/SpecificCategoryPage.jsx'
+import Checkout from './components/Pages/Checkout.jsx'
+import CreateCampaign from './components/Pages/CreateCampaign.jsx'
 
 const router = createBrowserRouter([
   {
@@ -30,6 +32,15 @@ const router = createBrowserRouter([
   {
     path:'/specific-category-page',
     element:<ActualSpecificCategoryPage/>
+  },
+  {
+    path:'/checkout',
+    element:<Checkout/>
+  }
+  ,
+  {
+    path:'/createCampaign',
+    element:<CreateCampaign/>
   }
 ]);
 

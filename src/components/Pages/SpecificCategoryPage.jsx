@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom'
 import fishLogoBlack from '../assets/icons-fish.jpg'
 import '../CSS/SpecificCategoryPage.css'
 import '../jsFiles/dropdown.js'
 
 function ActualSpecificCategoryPage(){
 
-    const [users, setUsers] = useState([]);
+        const [users, setUsers] = useState([]);
         const [loading, setLoading] = useState(true);
         const [selectedCategory, setSelectedCategory] = useState("");
+        const navigate = useNavigate();
     
         useEffect(() => {
             fetch("/data.json")
@@ -60,10 +62,13 @@ function ActualSpecificCategoryPage(){
         </div>
         <h2 className="second-half">CATEGORY</h2>
 
-        <div style={{display: "flex", gap: "20px",position: "relative", top: "300px", flexWrap: "wrap"}} className="campaigns-container">
+        <div style={{display: "flex", gap: "20px",position: "relative", top: "300px", flexWrap: "wrap"}} 
+        className="campaigns-container"
+        onClick={() => navigate(`/campaign/${campaign.id}`)}>
             {users.length === 0 ? <p>No users found in this category.</p> : (
                 users.map((user) => (
-                    <div style={{display: "flex", flexDirection: "column", gap: "10px", justifyContent: "center", position: "relative"}} key={user.id}>
+                    <div style={{display: "flex", flexDirection: "column", gap: "10px", justifyContent: "center", position: "relative"}} 
+                    key={user.id}>
                         <img src={campaign.mainImage} style={{width: "400px", height: "250px"}} alt="projectMainImage"/>
                         <img src={user.profilePicture} style={{width: "60px", height: "60px", borderRadius: "50%"}} alt="userProfileImage"/>
                             <div className="content-container" style={{position: "absolute", top: "260px", left: "70px", display: "flex", flexDirection : "column", alignItems : "start"}}>

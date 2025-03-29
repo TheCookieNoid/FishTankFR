@@ -6,13 +6,14 @@ import Login from './components/Pages/Login.jsx';
 import LandingPage from './components/Pages/LandingPage.jsx';
 import CategoryPage from './components/Pages/CategoriesPage.jsx';
 import ActualSpecificCategoryPage from './components/Pages/SpecificCategoryPage.jsx';
-import SpecificCategoryPage from './components/Pages/Test-SpecificCategoryPage.jsx';
+import Checkout from './components/Pages/Checkout.jsx';
+import CreateCampaign from './components/Pages/CreateCampaign.jsx';
 
 function App() {
 
     return(
-    <>
-    </>
+        <>
+        </>
     );
 }
 
