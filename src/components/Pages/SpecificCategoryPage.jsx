@@ -44,7 +44,7 @@ function ActualSpecificCategoryPage(){
         </div>
 
         <h2 className="first-half">YOU ARE VIEWING</h2>
-        <div className="dropdown">
+        <div className="dropdown" style={{position: 'absolute', top: '160px', left: '0px'}}>
             <div className="select">
                 <span className="selected">ARTS</span>
                 <div className="caret"></div>

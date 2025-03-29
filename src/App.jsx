@@ -1,4 +1,3 @@
-
 import PreLoader from './components/Pages/PreLoader.jsx';
 import SignUP from './components/Pages/Sign-up.jsx';
 import { Router, Routes,Route } from 'react-router-dom';
@@ -12,8 +11,7 @@ import CreateCampaign from './components/Pages/CreateCampaign.jsx';
 function App() {
 
     return(
-        <>
-        </>
+        <></>
     );
 }
 
