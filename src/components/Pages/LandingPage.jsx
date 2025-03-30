@@ -1,36 +1,35 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../CSS/LandingPage.css'
 import fishLogoBlack from '../assets/icons8-fish-50.png';
 import project1 from '../assets/computerArt.png';
 import project2 from '../assets/milkAndHoney.png';
 import project3 from '../assets/clothesBrand.png';
 import Footer from '../../new-components/Footer.jsx';
+import UserProfileMenu from '../UserProfileMenu.jsx';
+import { useAuth } from '../../hooks/useAuth';
+import Navbar from '../Navbar';
 
-function LandingPage(){
-    return(
+function LandingPage() {
+    const navigate = useNavigate();
+    const { user, loading, handleLogout } = useAuth(true);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    return (
         <div className="main-container">
-
-            <div className="navbar">
-                <div className="main-logo">
-                    <h1>FISHTANK</h1>
-                    <p>FR</p>
-                    <img src={fishLogoBlack} alt="fishlogoblack"/>
-                </div>
-                <ul>
-                    <li><a href="">CAMPAIGNS</a></li>
-                    <li><a href="">ABOUT</a></li>
-                    <li><a href="">EXPLORE</a></li>
-                </ul>
-                <button>LOGIN</button>
-            </div>
+            <Navbar user={user} onLogout={handleLogout} />
 
             <div className="carousel">
                 <div className="carousel-inner">
-                    <img src={project1} />
-                    <img src={project2} />
-                    <img src={project3} />
-                    <img src={project1} />
-                    <img src={project2} />
-                    <img src={project3} />
+                    <img src={project1} alt="Project 1" />
+                    <img src={project2} alt="Project 2" />
+                    <img src={project3} alt="Project 3" />
+                    <img src={project1} alt="Project 1" />
+                    <img src={project2} alt="Project 2" />
+                    <img src={project3} alt="Project 3" />
                 </div>
             </div>
 
@@ -44,12 +43,11 @@ function LandingPage(){
             </div>
 
             <div className='black-background'>
-
                 <div className='new-navbar-box'>
-                <ul className='new-navbar'>
-                    <li><a href="">FISHTANKFR</a></li>
-                    <li><a href="">MENU</a></li>
-                </ul>
+                    <ul className='new-navbar'>
+                        <li><a href="">FISHTANKFR</a></li>
+                        <li><a href="">MENU</a></li>
+                    </ul>
                 </div>
 
                 <p className='kickstart-headline'>Kickstart Your Dream: Launch Your Fundraiser Today!</p>
@@ -83,15 +81,15 @@ function LandingPage(){
                         </div>
                     </div>
                     <div id='controls'>
-                        <label for="slide1"></label>
-                        <label for="slide2"></label>
-                        <label for="slide3"></label>
+                        <label htmlFor="slide1"></label>
+                        <label htmlFor="slide2"></label>
+                        <label htmlFor="slide3"></label>
                     </div>
                     <div id="bullets">
-                        <label for="slide1"></label>
-                        <label for="slide2"></label>
-                        <label for="slide3"></label>
-                        </div>
+                        <label htmlFor="slide1"></label>
+                        <label htmlFor="slide2"></label>
+                        <label htmlFor="slide3"></label>
+                    </div>
                 </div>
             </div>
 
@@ -114,7 +112,7 @@ function LandingPage(){
             </div>
             <Footer />
         </div>
-    )
+    );
 }
 
-export default LandingPage
+export default LandingPage;

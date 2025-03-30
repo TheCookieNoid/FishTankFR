@@ -9,12 +9,11 @@
     box-sizing: border-box;
 }
 
-body{
-    display: flex;
-    justify-content: center;
+body {
     font-family: bebas;
     overflow-x: hidden;
     overflow-y: hidden;
+    background-color: black;
 }
 
 .logo-container{
@@ -46,7 +45,7 @@ body{
     gap: 10px;
 }
 
-.credentials-container input{
+.credentials-container input, textarea{
     background-color: white;
     height: 50px;
     width: 450px;
@@ -56,7 +55,7 @@ body{
     font-size: 20px;
 }
 
-.credentials-container input::placeholder{
+.credentials-container input::placeholder, textarea::placeholder{
     color: black;
 }
 

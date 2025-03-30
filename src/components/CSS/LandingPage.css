@@ -24,74 +24,8 @@ body{
     font-family: bebas;
     overflow-x: hidden;
     overflow-y: scroll;
+    
 }
-
-.navbar{
-    display: flex;
-    align-items: end;
-}
-
-.navbar ul{
-    position: relative;
-    left: 250px;
-    top: -30px;
-    display: flex;
-    gap: 100px;
-}
-
-.navbar ul li{
-    display: flex;
-    font-size: 30px;
-}
-
-.navbar ul li a{
-    text-decoration: none;
-    color: black;
-}
-
-.navbar button{
-    background-color: var(--btn-color);
-    width: 200px;
-    height: 50px;
-    font-size: 24px;
-    font-weight: 700;
-    border-radius: 15px;
-    position: relative;
-    left: 330px;
-    top: -25px;
-}
-
-.navbar button:hover{
-    cursor: pointer;
-    background-color: var(--btn-Darkcolor);
-    color: var(--bg-color);
-}
-
-.main-logo{
-    display: flex;
-    margin-left: 20px;
-}
-
-.main-logo h1{
-    font-size: 120px;
-}
-
-.main-logo p{
-    font-size: 60px;
-    position: absolute;
-    left: 370px;
-    top: 14px;
-}
-
-.main-logo img{
-    height: 45px;
-    width: 45px;
-    position: absolute;
-    left: 370px;
-    top: 77px;
-}
-
-
 
 .carousel {
     width: auto;

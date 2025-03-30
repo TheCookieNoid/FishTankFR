@@ -4,18 +4,6 @@
     box-sizing: border-box;
 }
 
-.main-logo-1 h1{
-    position: absolute;
-    left: 20px;
-    top: 0px;
-}
-
-.navbar-1 ul{
-    position: absolute;
-    top: 85px;
-    left: 700px;
-}
-
 .carousel-container {
     position: relative;
     top: -7px;

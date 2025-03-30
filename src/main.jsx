@@ -13,6 +13,7 @@ import Checkout from './components/Pages/Checkout.jsx'
 import CreateCampaign from './components/Pages/CreateCampaign.jsx'
 import CampaignDetails from './components/Pages/CampaignDetails.jsx'
 import Profile from './components/Pages/Profile.jsx'
+import Campaigns from './components/Pages/Campaigns.jsx'
 
 const router = createBrowserRouter([
   {
@@ -44,12 +45,16 @@ const router = createBrowserRouter([
     element:<CreateCampaign/>
   },
   {
-    path:'/campaignDetails',
+    path:'/campaign/:id',
     element:<CampaignDetails/>
   },
   {
     path:'/profile',
     element:<Profile/>
+  },
+  {
+    path:'/campaigns',
+    element:<Campaigns/>
   }
 ]);
 
