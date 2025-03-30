@@ -7,6 +7,7 @@ import CategoryPage from './components/Pages/CategoriesPage.jsx';
 import ActualSpecificCategoryPage from './components/Pages/SpecificCategoryPage.jsx';
 import Checkout from './components/Pages/Checkout.jsx';
 import CreateCampaign from './components/Pages/CreateCampaign.jsx';
+import CampaignDetails from './components/Pages/CampaignDetails.jsx';
 
 function App() {
 
