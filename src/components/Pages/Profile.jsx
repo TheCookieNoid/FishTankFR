@@ -47,6 +47,8 @@ function Profile() {
     const [isCreatingCampaign, setIsCreatingCampaign] = useState(false);
     const [investments, setInvestments] = useState([]);
     const [showInvestments, setShowInvestments] = useState(false);
+    const [isLoadingInvestments, setIsLoadingInvestments] = useState(false);
+    const [investmentError, setInvestmentError] = useState('');
 
     useEffect(() => {
         if (user) {
@@ -110,10 +112,15 @@ function Profile() {
 
     const loadUserInvestments = async () => {
         try {
+            setIsLoadingInvestments(true);
+            setInvestmentError('');
             const response = await userService.getUserInvestments(user.id);
             setInvestments(response.data);
         } catch (err) {
             console.error('Failed to load investments:', err);
+            setInvestmentError('Failed to load investments');
+        } finally {
+            setIsLoadingInvestments(false);
         }
     };
 
@@ -506,16 +513,16 @@ function Profile() {
                                 {isEditing && <span>Change Photo</span>}
                             </div>
                         </label>
-                        <input
-                            type="file"
-                            accept='image/*'
+                        <input 
+                            type="file" 
+                            accept='image/*' 
                             id='input-profile-image'
                             name="profile_picture"
                             onChange={handleChange}
                             style={{ display: 'none' }}
                         />
-                        <img
-                            src={formData.profile_picture ? URL.createObjectURL(formData.profile_picture) : user.profile_picture}
+                        <img 
+                            src={formData.profile_picture ? URL.createObjectURL(formData.profile_picture) : user.profile_picture} 
                             alt="Profile"
                         />
                     </div>
@@ -676,7 +683,7 @@ function Profile() {
 
             <div className='campaigns-section'>
                 <div className='campaigns-header'>
-                    <h2>Your Campaigns</h2>
+                <h2>Your Campaigns</h2>
                     <button 
                         onClick={openCreateCampaignModal}
                         className="primary-button"
@@ -1254,6 +1261,55 @@ function Profile() {
                     </div>
                 </div>
             )}
+
+            {/* Add Investments Section */}
+            <div className='investments-section'>
+                <h2>Your Investments</h2>
+                {isLoadingInvestments ? (
+                    <div className="loading">Loading investments...</div>
+                ) : investmentError ? (
+                    <div className="error-message">{investmentError}</div>
+                ) : investments.length === 0 ? (
+                    <p>You haven't invested in any campaigns yet.</p>
+                ) : (
+                    <div className='investments-grid'>
+                        {investments.map(investment => (
+                            <div key={investment.id} className='investment-card'>
+                                <div className='investment-thumbnail'>
+                                    <img
+                                        src={investment.campaign.main_image || '/default-campaign.png'}
+                                        alt={investment.campaign.title}
+                                    />
+                                </div>
+                                <div className='investment-info'>
+                                    <h4>{investment.campaign.title}</h4>
+                                    <div className='campaign-stats'>
+                                        <p className='investment-amount'>
+                                            Your Investment: ₹{investment.invested_amount}
+                                        </p>
+                                        <p className='campaign-progress'>
+                                            Campaign Progress: {Math.round((investment.campaign.amount_generated / investment.campaign.required_amount) * 100)}%
+                                        </p>
+                                    </div>
+                                    <div className='campaign-details'>
+                                        <p>Goal: ₹{investment.campaign.required_amount}</p>
+                                        <p>Raised: ₹{investment.campaign.amount_generated}</p>
+                                        <p className='investment-date'>
+                                            Invested on: {new Date(investment.investment_date).toLocaleDateString()}
+                                        </p>
+                                    </div>
+                                    <button
+                                        onClick={() => navigate(`/campaign/${investment.campaign.id}`)}
+                                        className="view-campaign-button"
+                                    >
+                                        View Campaign
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

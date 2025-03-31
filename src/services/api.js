@@ -37,7 +37,24 @@ export const userService = {
 
   // User Statistics
   getUserCampaigns: (userId) => api.get(`/user-profiles/${userId}/campaigns/`),
-  getUserInvestments: (userId) => api.get(`/user-profiles/${userId}/investments/`),
+  getUserInvestments: async (userId) => {
+    const response = await api.get(`/user-profiles/${userId}/investments/`);
+    // Get all campaign IDs from investments
+    const campaignIds = response.data.map(investment => investment.campaign);
+    
+    // Get campaign details for each investment
+    const campaignDetails = await Promise.all(
+        campaignIds.map(campaignId => campaignService.get(campaignId))
+    );
+
+    // Combine investment data with campaign details
+    const investmentsWithCampaigns = response.data.map((investment, index) => ({
+        ...investment,
+        campaign: campaignDetails[index].data
+    }));
+
+    return { data: investmentsWithCampaigns };
+  },
   getUserStatistics: (userId) => api.get(`/user-profiles/${userId}/statistics/`),
 };
 

@@ -127,4 +127,20 @@
     .navbar ul li {
         font-size: 24px;
     }
+}
+
+.user-profile-menu .logout-button {
+    color: #dc3545;
+    border: 1px solid #dc3545;
+    background-color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.user-profile-menu .logout-button:hover {
+    background-color: #dc3545;
+    color: white;
 } 
