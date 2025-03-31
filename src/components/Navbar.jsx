@@ -4,7 +4,7 @@ import fishLogoBlack from './assets/icons8-fish-50.png';
 import UserProfileMenu from './UserProfileMenu';
 import './CSS/Navbar.css';
 
-function Navbar({ user, onLogout }) {
+function Navbar({ hideUserMenu = false }) {
     return (
         <div className="navbar">
             <Link to="/" className="main-logo">
@@ -17,7 +17,7 @@ function Navbar({ user, onLogout }) {
                 <li><Link to="/about">ABOUT</Link></li>
                 <li><Link to="/explore">EXPLORE</Link></li>
             </ul>
-            <UserProfileMenu user={user} onLogout={onLogout} />
+            {!hideUserMenu && <UserProfileMenu />}
         </div>
     );
 }

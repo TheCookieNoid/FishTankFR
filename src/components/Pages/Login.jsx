@@ -52,13 +52,8 @@ function Login() {
 
     return (
         <div className='main-container'>
-            <Navbar user={user} onLogout={handleLogout} />
+            <Navbar hideUserMenu={true} />
             
-            <div className='logo-container'>
-                <img src={Fish} alt="fishtankfrLogo"/>
-                <h1 style={{color: 'white'}}>FISHTANKFR</h1>
-            </div>
-    
             <div className='credentials-container'>
                 <input 
                     type="text" 

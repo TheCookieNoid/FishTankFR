@@ -454,6 +454,30 @@ function Profile() {
         setShowModal(true);
     };
 
+    // Add delete handler function
+    const handleDeleteCampaign = async () => {
+        if (!selectedCampaign) return;
+
+        if (window.confirm('Are you sure you want to delete this campaign? This action cannot be undone.')) {
+            try {
+                setIsLoading(true);
+                await campaignService.delete(selectedCampaign.id);
+                
+                // Remove the campaign from the list
+                setCampaigns(campaigns.filter(c => c.id !== selectedCampaign.id));
+                
+                // Close the modal
+                setShowModal(false);
+                setSelectedCampaign(null);
+            } catch (err) {
+                setError('Failed to delete campaign. Please try again.');
+                console.error('Delete error:', err);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+    };
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -765,6 +789,13 @@ function Profile() {
                                 className="secondary-button"
                             >
                                 Edit Campaign
+                            </button>
+                            <button
+                                onClick={handleDeleteCampaign}
+                                className="delete-button"
+                                disabled={isLoading}
+                            >
+                                {isLoading ? 'Deleting...' : 'Delete Campaign'}
                             </button>
                         </div>
                     </div>

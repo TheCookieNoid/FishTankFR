@@ -393,11 +393,59 @@
 }
 
 .modal-footer {
-    padding: 20px 25px;
-    border-top: 1px solid #eee;
     display: flex;
+    gap: 12px;
     justify-content: flex-end;
-    gap: 15px;
+    padding: 16px;
+    border-top: 1px solid #eee;
+}
+
+.modal-footer button {
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    min-width: 120px;
+}
+
+.primary-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+.primary-button:hover {
+    background-color: #0056b3;
+}
+
+.secondary-button {
+    background-color: white;
+    color: #007bff;
+    border: 1px solid #007bff;
+}
+
+.secondary-button:hover {
+    background-color: #f8f9fa;
+}
+
+.delete-button {
+    background-color: white;
+    color: #dc3545;
+    border: 1px solid #dc3545;
+}
+
+.delete-button:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+.delete-button:disabled {
+    background-color: #f8f9fa;
+    border-color: #dc354580;
+    color: #dc354580;
+    cursor: not-allowed;
 }
 
 .edit-campaign-modal {
@@ -564,4 +612,24 @@
 
 .campaigns-header h2 {
     margin: 0;
+}
+
+.danger-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.danger-button:hover {
+    background-color: #c82333;
+}
+
+.danger-button:disabled {
+    background-color: #dc354580;
+    cursor: not-allowed;
 }

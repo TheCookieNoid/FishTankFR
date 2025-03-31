@@ -5,12 +5,10 @@ import Fish from '../assets/icon-fish-transpernt.png'
 import User from '../assets/user.png'
 import Pass from '../assets/password.png'
 import { userService } from '../../services/api';
-import { useAuth } from '../../hooks/useAuth';
 import Navbar from '../Navbar'
 
 function SignUP() {
     const navigate = useNavigate();
-    const { user, loading, handleLogout } = useAuth(false);
     const [formData, setFormData] = useState({
         username: '',
         email: '',
@@ -74,13 +72,9 @@ function SignUP() {
         }
     };
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
     return (
         <div className='main-container'>
-            <Navbar user={user} onLogout={handleLogout} />
+            <Navbar hideUserMenu={true} />
 
             <div className='credentials-container'>
                 <input 
