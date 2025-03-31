@@ -257,6 +257,11 @@ class CampaignViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
     parser_classes = (parsers.MultiPartParser, parsers.FormParser)
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['request'] = self.request
+        return context
+
     @swagger_auto_schema(
         operation_description="Create a new campaign",
         manual_parameters=[
@@ -454,7 +459,15 @@ class CampaignViewSet(viewsets.ModelViewSet):
         }
     )
     def update(self, request, *args, **kwargs):
-        return super().update(request, *args, **kwargs)
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
+
+    def perform_update(self, serializer):
+        serializer.save()
 
     def get_queryset(self):
         queryset = Campaign.objects.all()

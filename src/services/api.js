@@ -44,10 +44,25 @@ export const userService = {
 // Campaign APIs
 export const campaignService = {
   // Basic CRUD
-  create: (campaignData) => api.post('/campaigns/', campaignData),
+  create: (campaignData) => api.post('/campaigns/', campaignData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    }
+  }),
   list: (params = {}) => api.get('/campaigns/', { params }),
   get: (campaignId) => api.get(`/campaigns/${campaignId}/`),
-  update: (campaignId, campaignData) => api.put(`/campaigns/${campaignId}/`, campaignData),
+  update: (campaignId, campaignData) => {
+    // Check if campaignData is FormData (contains files)
+    if (campaignData instanceof FormData) {
+      return api.put(`/campaigns/${campaignId}/`, campaignData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        }
+      });
+    }
+    // If no files, send as JSON
+    return api.put(`/campaigns/${campaignId}/`, campaignData);
+  },
   delete: (campaignId) => api.delete(`/campaigns/${campaignId}/`),
 
   // Campaign Specific

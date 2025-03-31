@@ -148,74 +148,74 @@ class Campaign(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        # Store the images if they exist
-        images = {
-            'main_image': self.main_image,
-            'image_1': self.image_1,
-            'image_2': self.image_2,
-            'image_3': self.image_3,
-            'image_4': self.image_4
-        }
-        
-        # If this is an existing instance
         if self.id:
             try:
-                # Get the old instance
                 old_instance = Campaign.objects.get(id=self.id)
-                # Check each image field
-                for field_name, image in images.items():
-                    if image and getattr(old_instance, field_name) != image:
+                # Handle optional images
+                for field_name in ['image_1', 'image_2', 'image_3', 'image_4']:
+                    new_value = getattr(self, field_name)
+                    old_value = getattr(old_instance, field_name)
+                    
+                    if old_value and (not new_value or old_value != new_value):
                         try:
-                            old_image = getattr(old_instance, field_name)
-                            if old_image:
-                                old_image.close()
-                                if os.path.isfile(old_image.path):
-                                    os.remove(old_image.path)
-                        except (OSError, ValueError, Exception) as e:
-                            print(f"Error deleting old {field_name}: {e}")
+                            # Close the file handle
+                            if hasattr(old_value, 'file'):
+                                old_value.file.close()
+                            # Delete the old file
+                            if hasattr(old_value, 'path') and os.path.isfile(old_value.path):
+                                os.remove(old_value.path)
+                        except Exception as e:
+                            print(f"Error removing old image {field_name}: {e}")
+                        
+                        if not new_value:
+                            setattr(self, field_name, None)
             except Campaign.DoesNotExist:
                 pass
 
-        # Save the instance first
+        # Perform the save
         super().save(*args, **kwargs)
-        
-        # If there are new images, rename them
-        for field_name, image in images.items():
-            if image and hasattr(image, 'file'):
+
+        # Handle new image renaming
+        for field_name in ['main_image', 'image_1', 'image_2', 'image_3', 'image_4']:
+            field_value = getattr(self, field_name)
+            if field_value and hasattr(field_value, 'file'):
                 try:
-                    # Get the current file path
-                    current_path = image.path
+                    # Close any existing file handles
+                    field_value.file.close()
                     
-                    # Generate the new filename with the actual ID
+                    current_path = field_value.path
                     ext = os.path.splitext(current_path)[1]
                     new_filename = f"{self.id}-{field_name}{ext}"
                     new_path = os.path.join(os.path.dirname(current_path), new_filename)
                     
-                    # Rename the file if it's different
+                    # Wait for a short time to ensure file handles are released
+                    time.sleep(0.1)
+                    
                     if current_path != new_path:
+                        if os.path.exists(new_path):
+                            os.remove(new_path)
                         os.rename(current_path, new_path)
-                        setattr(self, field_name, os.path.join('campaign_images', new_filename))
-                        # Update only the image field
+                        setattr(self, field_name, f"campaign_images/{new_filename}")
                         super().save(update_fields=[field_name])
                 except Exception as e:
                     print(f"Error handling {field_name}: {e}")
-                    setattr(self, field_name, None)
-                    super().save(update_fields=[field_name])
+                finally:
+                    # Ensure file handles are closed
+                    if hasattr(field_value, 'file'):
+                        field_value.file.close()
 
     def delete(self, *args, **kwargs):
-        try:
-            # Delete all associated images
-            for field_name in ['main_image', 'image_1', 'image_2', 'image_3', 'image_4']:
-                image = getattr(self, field_name)
-                if image:
-                    try:
-                        image.close()
-                        if os.path.isfile(image.path):
-                            os.remove(image.path)
-                    except (OSError, ValueError, Exception) as e:
-                        print(f"Error deleting {field_name}: {e}")
-        except Exception as e:
-            print(f"Error during image deletion: {e}")
+        # Close and delete all associated image files
+        for field_name in ['main_image', 'image_1', 'image_2', 'image_3', 'image_4']:
+            field_value = getattr(self, field_name)
+            if field_value:
+                try:
+                    if hasattr(field_value, 'file'):
+                        field_value.file.close()
+                    if hasattr(field_value, 'path') and os.path.isfile(field_value.path):
+                        os.remove(field_value.path)
+                except Exception as e:
+                    print(f"Error deleting {field_name}: {e}")
         super().delete(*args, **kwargs)
 
     class Meta:

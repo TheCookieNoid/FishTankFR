@@ -90,10 +90,32 @@ class CampaignSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Campaign
-        fields = ('id', 'user', 'title', 'description', 'founder', 'required_amount', 
-                 'amount_generated', 'category', 'last_date', 'comment', 'main_image',
-                 'image_1', 'image_2', 'image_3', 'image_4', 'created_at', 'updated_at')
-        read_only_fields = ('amount_generated', 'created_at', 'updated_at')
+        fields = '__all__'
+        extra_kwargs = {
+            'main_image': {'required': True},
+            'image_1': {'required': False, 'allow_null': True},
+            'image_2': {'required': False, 'allow_null': True},
+            'image_3': {'required': False, 'allow_null': True},
+            'image_4': {'required': False, 'allow_null': True}
+        }
+
+    def update(self, instance, validated_data):
+        # Get the request data before it's validated
+        request_data = self.context['request'].data if 'request' in self.context else {}
+        
+        # Handle optional image fields
+        optional_image_fields = ['image_1', 'image_2', 'image_3', 'image_4']
+        for field in optional_image_fields:
+            # If the field is not in the request data, set it to None
+            if field not in request_data:
+                setattr(instance, field, None)
+        
+        # Update the rest of the fields from validated_data
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        
+        instance.save()
+        return instance
 
 class InvestmentSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(queryset=UserProfile.objects.all())

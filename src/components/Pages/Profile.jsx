@@ -35,8 +35,16 @@ function Profile() {
         description: '',
         required_amount: '',
         last_date: '',
-        images: []
+        founder: '',
+        category: '',
+        comment: '',
+        main_image: null,
+        image_1: null,
+        image_2: null,
+        image_3: null,
+        image_4: null
     });
+    const [isCreatingCampaign, setIsCreatingCampaign] = useState(false);
 
     useEffect(() => {
         if (user) {
@@ -60,7 +68,14 @@ function Profile() {
                 description: selectedCampaign.description || '',
                 required_amount: selectedCampaign.required_amount || '',
                 last_date: selectedCampaign.last_date ? new Date(selectedCampaign.last_date).toISOString().split('T')[0] : '',
-                images: selectedCampaign.images || []
+                founder: selectedCampaign.founder || '',
+                category: selectedCampaign.category || '',
+                comment: selectedCampaign.comment || '',
+                main_image: selectedCampaign.main_image || null,
+                image_1: selectedCampaign.image_1 || null,
+                image_2: selectedCampaign.image_2 || null,
+                image_3: selectedCampaign.image_3 || null,
+                image_4: selectedCampaign.image_4 || null
             });
         }
     }, [selectedCampaign, isEditingCampaign]);
@@ -184,27 +199,98 @@ function Profile() {
         e.preventDefault();
         setError('');
         setIsLoading(true);
-
+    
         try {
             const formDataToSend = new FormData();
+            
+            // Add user ID (required field)
+            formDataToSend.append('user', user.id);
+    
+            // Add all non-image fields
             Object.keys(campaignFormData).forEach(key => {
-                if (key !== 'images') {
+                if (key !== 'main_image' && !key.startsWith('image_')) {
                     formDataToSend.append(key, campaignFormData[key]);
                 }
             });
-
-            // Append each image separately
-            campaignFormData.images.forEach((image, index) => {
-                if (image instanceof File) {
-                    formDataToSend.append(`images[${index}]`, image);
+    
+            // Helper function to convert URL to File
+            const urlToFile = async (url) => {
+                try {
+                    const response = await fetch(url);
+                    const blob = await response.blob();
+                    const filename = url.split('/').pop() || 'image.jpg';
+                    return new File([blob], filename, { type: response.headers.get('content-type') || 'image/jpeg' });
+                } catch (error) {
+                    console.error('Error converting URL to file:', error);
+                    return null;
                 }
-            });
-
-            await campaignService.updateCampaign(selectedCampaign.id, formDataToSend);
-            loadUserCampaigns();
+            };
+    
+            // Handle main image (required)
+            if (campaignFormData.main_image instanceof File) {
+                formDataToSend.append('main_image', campaignFormData.main_image);
+            } else if (typeof campaignFormData.main_image === 'string' && campaignFormData.main_image.trim() !== '') {
+                try {
+                    const mainImageFile = await urlToFile(campaignFormData.main_image);
+                    if (mainImageFile) {
+                        formDataToSend.append('main_image', mainImageFile);
+                    } else {
+                        setError('Failed to process main image');
+                        setIsLoading(false);
+                        return;
+                    }
+                } catch (error) {
+                    setError('Failed to process main image');
+                    setIsLoading(false);
+                    return;
+                }
+            } else {
+                setError('Main image is required');
+                setIsLoading(false);
+                return;
+            }
+    
+            // Handle additional images (optional)
+            for (let i = 1; i <= 4; i++) {
+                const imageKey = `image_${i}`;
+                if (campaignFormData[imageKey] instanceof File) {
+                    // New file uploaded
+                    formDataToSend.append(imageKey, campaignFormData[imageKey]);
+                } else if (typeof campaignFormData[imageKey] === 'string' && campaignFormData[imageKey].trim() !== '') {
+                    // Convert existing URL to file
+                    try {
+                        const imageFile = await urlToFile(campaignFormData[imageKey]);
+                        if (imageFile) {
+                            formDataToSend.append(imageKey, imageFile);
+                        }
+                    } catch (error) {
+                        console.error(`Failed to process ${imageKey}:`, error);
+                        // Continue with other images
+                    }
+                }
+                // If null or empty string, don't send anything for optional images
+            }
+    
+            // Log FormData contents for debugging
+            for (let pair of formDataToSend.entries()) {
+                console.log(pair[0], pair[1]);
+            }
+    
+            const response = await campaignService.update(selectedCampaign.id, formDataToSend);
+            
+            // Update the selected campaign with the response data
+            setSelectedCampaign(response.data);
+            
+            // Update the campaigns list
+            const updatedCampaigns = campaigns.map(campaign => 
+                campaign.id === selectedCampaign.id ? response.data : campaign
+            );
+            setCampaigns(updatedCampaigns);
+            
             setIsEditingCampaign(false);
             setShowModal(false);
         } catch (err) {
+            console.error('Update error:', err.response?.data || err);
             setError(err.response?.data?.message || 'Campaign update failed. Please try again.');
         } finally {
             setIsLoading(false);
@@ -264,11 +350,108 @@ function Profile() {
     };
 
     // Remove image from campaign form
-    const handleRemoveImage = (index) => {
+    const handleRemoveImage = (imageField) => {
         setCampaignFormData(prev => ({
             ...prev,
-            images: prev.images.filter((_, i) => i !== index)
+            [imageField]: null // Explicitly set to null to indicate image removal
         }));
+    };
+
+    // Update the handleImageChange function to handle specific image fields
+    const handleImageChange = (e) => {
+        const { name, files } = e.target;
+        if (files && files[0]) {
+            setCampaignFormData(prev => ({
+                ...prev,
+                [name]: files[0]
+            }));
+        }
+    };
+
+    // Add this function to handle campaign creation
+    const handleCreateCampaignSubmit = async (e) => {
+        e.preventDefault();
+        setError('');
+        setIsLoading(true);
+
+        try {
+            const formDataToSend = new FormData();
+            
+            // Add user ID (required field)
+            formDataToSend.append('user', user.id);
+
+            // Add all non-image fields
+            Object.keys(campaignFormData).forEach(key => {
+                if (key !== 'main_image' && !key.startsWith('image_')) {
+                    formDataToSend.append(key, campaignFormData[key]);
+                }
+            });
+
+            // Handle main image (required)
+            if (campaignFormData.main_image instanceof File) {
+                formDataToSend.append('main_image', campaignFormData.main_image);
+            } else {
+                setError('Main image is required');
+                setIsLoading(false);
+                return;
+            }
+
+            // Handle additional images (optional)
+            for (let i = 1; i <= 4; i++) {
+                const imageKey = `image_${i}`;
+                if (campaignFormData[imageKey] instanceof File) {
+                    formDataToSend.append(imageKey, campaignFormData[imageKey]);
+                }
+            }
+
+            const response = await campaignService.create(formDataToSend);
+            
+            // Add the new campaign to the list
+            setCampaigns(prev => [response.data, ...prev]);
+            
+            // Reset form and close modal
+            setCampaignFormData({
+                title: '',
+                description: '',
+                required_amount: '',
+                last_date: '',
+                founder: '',
+                category: '',
+                comment: '',
+                main_image: null,
+                image_1: null,
+                image_2: null,
+                image_3: null,
+                image_4: null
+            });
+            setIsCreatingCampaign(false);
+            setShowModal(false);
+        } catch (err) {
+            console.error('Creation error:', err.response?.data || err);
+            setError(err.response?.data?.message || 'Campaign creation failed. Please try again.');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    // Add this to open create campaign modal
+    const openCreateCampaignModal = () => {
+        setCampaignFormData({
+            title: '',
+            description: '',
+            required_amount: '',
+            last_date: '',
+            founder: '',
+            category: '',
+            comment: '',
+            main_image: null,
+            image_1: null,
+            image_2: null,
+            image_3: null,
+            image_4: null
+        });
+        setIsCreatingCampaign(true);
+        setShowModal(true);
     };
 
     if (loading) {
@@ -456,7 +639,15 @@ function Profile() {
             </div>
 
             <div className='campaigns-section'>
-                <h2>Your Campaigns</h2>
+                <div className='campaigns-header'>
+                    <h2>Your Campaigns</h2>
+                    <button 
+                        onClick={openCreateCampaignModal}
+                        className="primary-button"
+                    >
+                        Create Campaign
+                    </button>
+                </div>
                 {campaigns.length === 0 ? (
                     <p>No campaigns yet. Start your first campaign!</p>
                 ) : (
@@ -488,6 +679,10 @@ function Profile() {
                             <h3>{selectedCampaign.title}</h3>
                         </div>
                         <div className='modal-body'>
+                            <div className='campaign-description-container'>
+                                <h4>Description</h4>
+                                <p className='campaign-description'>{selectedCampaign.description}</p>
+                            </div>
                             <div className='campaign-image-carousel'>
                                 {/* Construct images array dynamically */}
                                 {(() => {
@@ -556,10 +751,6 @@ function Profile() {
                                         </span>
                                     </div>
                                 </div>
-                                <div className='campaign-description-container'>
-                                    <h4>Description</h4>
-                                    <p className='campaign-description'>{selectedCampaign.description}</p>
-                                </div>
                             </div>
                         </div>
                         <div className='modal-footer'>
@@ -600,8 +791,10 @@ function Profile() {
                                         value={campaignFormData.title}
                                         onChange={handleCampaignChange}
                                         required
+                                        className="form-control"
                                     />
                                 </div>
+
                                 <div className="form-group">
                                     <label htmlFor="description">Description</label>
                                     <textarea
@@ -611,58 +804,145 @@ function Profile() {
                                         onChange={handleCampaignChange}
                                         required
                                         rows="4"
+                                        className="form-control"
                                     />
                                 </div>
+
                                 <div className="form-group">
-                                    <label htmlFor="required_amount">Funding Goal (₹)</label>
+                                    <label htmlFor="founder">Founder Name</label>
                                     <input
-                                        id="required_amount"
-                                        type="number"
-                                        name="required_amount"
-                                        value={campaignFormData.required_amount}
+                                        id="founder"
+                                        type="text"
+                                        name="founder"
+                                        value={campaignFormData.founder}
                                         onChange={handleCampaignChange}
                                         required
+                                        className="form-control"
                                     />
                                 </div>
+
+                                <div className="form-row">
+                                    <div className="form-group half">
+                                        <label htmlFor="required_amount">Funding Goal (₹)</label>
+                                        <input
+                                            id="required_amount"
+                                            type="number"
+                                            name="required_amount"
+                                            value={campaignFormData.required_amount}
+                                            onChange={handleCampaignChange}
+                                            required
+                                            className="form-control"
+                                            min="0"
+                                            step="0.01"
+                                        />
+                                    </div>
+
+                                    <div className="form-group half">
+                                        <label htmlFor="category">Category</label>
+                                        <select
+                                            id="category"
+                                            name="category"
+                                            value={campaignFormData.category}
+                                            onChange={handleCampaignChange}
+                                            required
+                                            className="form-control"
+                                        >
+                                            <option value="">Select Category</option>
+                                            <option value="tech">Tech</option>
+                                            <option value="art">Art</option>
+                                            <option value="food">Food</option>
+                                            <option value="education">Education</option>
+                                            <option value="social">Social</option>
+                                        </select>
+                                    </div>
+                                </div>
+
                                 <div className="form-group">
                                     <label htmlFor="last_date">End Date</label>
                                     <input
                                         id="last_date"
                                         type="date"
                                         name="last_date"
-                                        value={campaignFormData.last_date}
+                                        value={campaignFormData.last_date.split('T')[0]}
                                         onChange={handleCampaignChange}
                                         required
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="campaign_images">Campaign Images</label>
-                                    <input
-                                        id="campaign_images"
-                                        type="file"
-                                        name="campaign_images"
-                                        onChange={handleCampaignChange}
-                                        accept="image/*"
-                                        multiple
+                                        className="form-control"
+                                        min={new Date().toISOString().split('T')[0]}
                                     />
                                 </div>
 
-                                <div className="current-images">
-                                    <h4>Current Images:</h4>
-                                    <div className="images-grid">
-                                        {campaignFormData.images.map((image, index) => (
-                                            <div key={index} className="image-item">
-                                                <img
-                                                    src={image instanceof File ? URL.createObjectURL(image) : image}
-                                                    alt={`Campaign image ${index + 1}`}
+                                <div className="form-group">
+                                    <label htmlFor="comment">Additional Comments</label>
+                                    <textarea
+                                        id="comment"
+                                        name="comment"
+                                        value={campaignFormData.comment}
+                                        onChange={handleCampaignChange}
+                                        rows="2"
+                                        className="form-control"
+                                    />
+                                </div>
+
+                                <div className="images-section">
+                                    <h4>Campaign Images</h4>
+                                    <div className="current-images">
+                                        <div className="image-upload-group">
+                                            <label>Main Image</label>
+                                            <div className="image-preview">
+                                                {campaignFormData.main_image && (
+                                                    <div className="image-item">
+                                                        <img
+                                                            src={campaignFormData.main_image instanceof File 
+                                                                ? URL.createObjectURL(campaignFormData.main_image)
+                                                                : campaignFormData.main_image}
+                                                            alt="Main campaign image"
+                                                        />
+                                                        <button
+                                                            type="button"
+                                                            className="remove-image-btn"
+                                                            onClick={() => handleRemoveImage('main_image')}
+                                                        >×</button>
+                                                    </div>
+                                                )}
+                                                <input
+                                                    type="file"
+                                                    id="main_image"
+                                                    name="main_image"
+                                                    onChange={handleImageChange}
+                                                    accept="image/*"
+                                                    className="file-input"
                                                 />
-                                                <button
-                                                    type="button"
-                                                    className="remove-image-btn"
-                                                    onClick={() => handleRemoveImage(index)}
-                                                >
-                                                    ×
-                                                </button>
+                                            </div>
+                                        </div>
+
+                                        {[1, 2, 3, 4].map((num) => (
+                                            <div key={num} className="image-upload-group">
+                                                <label>Additional Image {num}</label>
+                                                <div className="image-preview">
+                                                    {campaignFormData[`image_${num}`] && (
+                                                        <div className="image-item">
+                                                            <img
+                                                                src={campaignFormData[`image_${num}`] instanceof File 
+                                                                    ? URL.createObjectURL(campaignFormData[`image_${num}`])
+                                                                    : campaignFormData[`image_${num}`]}
+                                                                alt={`Campaign image ${num}`}
+                                                            />
+                                                            <button
+                                                                type="button"
+                                                                className="remove-image-btn"
+                                                                onClick={() => handleRemoveImage(`image_${num}`)}
+                                                            >×</button>
+                                                        </div>
+                                                    )}
+                                                    <input
+                                                        type="file"
+                                                        id={`image_${num}`}
+                                                        name={`image_${num}`}
+                                                        onChange={handleImageChange}
+                                                        accept="image/*"
+                                                        className="file-input"
+                                                    />
+                                                </div>
                                             </div>
                                         ))}
                                     </div>
@@ -672,14 +952,216 @@ function Profile() {
 
                                 <div className='button-group'>
                                     <button type="submit" disabled={isLoading} className="primary-button">
-                                        {isLoading ? 'SAVING...' : 'SAVE CAMPAIGN'}
+                                        {isLoading ? 'Saving Changes...' : 'Save Campaign'}
                                     </button>
                                     <button
                                         type="button"
                                         onClick={() => setIsEditingCampaign(false)}
                                         className="secondary-button"
                                     >
-                                        CANCEL
+                                        Cancel
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Add Create Campaign Modal */}
+            {showModal && isCreatingCampaign && (
+                <div className='modal-overlay'>
+                    <div className='modal-content edit-campaign-modal' onClick={(e) => e.stopPropagation()}>
+                        <button className='modal-close-btn' onClick={() => {
+                            setShowModal(false);
+                            setIsCreatingCampaign(false);
+                        }}>×</button>
+                        <div className='modal-header'>
+                            <h3>Create New Campaign</h3>
+                        </div>
+                        <div className='modal-body'>
+                            <form onSubmit={handleCreateCampaignSubmit}>
+                                <div className="form-group">
+                                    <label htmlFor="title">Campaign Title</label>
+                                    <input
+                                        id="title"
+                                        type="text"
+                                        name="title"
+                                        value={campaignFormData.title}
+                                        onChange={handleCampaignChange}
+                                        required
+                                        className="form-control"
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="description">Description</label>
+                                    <textarea
+                                        id="description"
+                                        name="description"
+                                        value={campaignFormData.description}
+                                        onChange={handleCampaignChange}
+                                        required
+                                        rows="4"
+                                        className="form-control"
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="founder">Founder Name</label>
+                                    <input
+                                        id="founder"
+                                        type="text"
+                                        name="founder"
+                                        value={campaignFormData.founder}
+                                        onChange={handleCampaignChange}
+                                        required
+                                        className="form-control"
+                                    />
+                                </div>
+
+                                <div className="form-row">
+                                    <div className="form-group half">
+                                        <label htmlFor="required_amount">Funding Goal (₹)</label>
+                                        <input
+                                            id="required_amount"
+                                            type="number"
+                                            name="required_amount"
+                                            value={campaignFormData.required_amount}
+                                            onChange={handleCampaignChange}
+                                            required
+                                            className="form-control"
+                                            min="0"
+                                            step="0.01"
+                                        />
+                                    </div>
+
+                                    <div className="form-group half">
+                                        <label htmlFor="category">Category</label>
+                                        <select
+                                            id="category"
+                                            name="category"
+                                            value={campaignFormData.category}
+                                            onChange={handleCampaignChange}
+                                            required
+                                            className="form-control"
+                                        >
+                                            <option value="">Select Category</option>
+                                            <option value="tech">Tech</option>
+                                            <option value="art">Art</option>
+                                            <option value="food">Food</option>
+                                            <option value="education">Education</option>
+                                            <option value="social">Social</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="last_date">End Date</label>
+                                    <input
+                                        id="last_date"
+                                        type="date"
+                                        name="last_date"
+                                        value={campaignFormData.last_date.split('T')[0]}
+                                        onChange={handleCampaignChange}
+                                        required
+                                        className="form-control"
+                                        min={new Date().toISOString().split('T')[0]}
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="comment">Additional Comments</label>
+                                    <textarea
+                                        id="comment"
+                                        name="comment"
+                                        value={campaignFormData.comment}
+                                        onChange={handleCampaignChange}
+                                        rows="2"
+                                        className="form-control"
+                                    />
+                                </div>
+
+                                <div className="images-section">
+                                    <h4>Campaign Images</h4>
+                                    <div className="current-images">
+                                        <div className="image-upload-group">
+                                            <label>Main Image</label>
+                                            <div className="image-preview">
+                                                {campaignFormData.main_image && (
+                                                    <div className="image-item">
+                                                        <img
+                                                            src={campaignFormData.main_image instanceof File 
+                                                                ? URL.createObjectURL(campaignFormData.main_image)
+                                                                : campaignFormData.main_image}
+                                                            alt="Main campaign image"
+                                                        />
+                                                        <button
+                                                            type="button"
+                                                            className="remove-image-btn"
+                                                            onClick={() => handleRemoveImage('main_image')}
+                                                        >×</button>
+                                                    </div>
+                                                )}
+                                                <input
+                                                    type="file"
+                                                    id="main_image"
+                                                    name="main_image"
+                                                    onChange={handleImageChange}
+                                                    accept="image/*"
+                                                    className="file-input"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        {[1, 2, 3, 4].map((num) => (
+                                            <div key={num} className="image-upload-group">
+                                                <label>Additional Image {num}</label>
+                                                <div className="image-preview">
+                                                    {campaignFormData[`image_${num}`] && (
+                                                        <div className="image-item">
+                                                            <img
+                                                                src={campaignFormData[`image_${num}`] instanceof File 
+                                                                    ? URL.createObjectURL(campaignFormData[`image_${num}`])
+                                                                    : campaignFormData[`image_${num}`]}
+                                                                alt={`Campaign image ${num}`}
+                                                            />
+                                                            <button
+                                                                type="button"
+                                                                className="remove-image-btn"
+                                                                onClick={() => handleRemoveImage(`image_${num}`)}
+                                                            >×</button>
+                                                        </div>
+                                                    )}
+                                                    <input
+                                                        type="file"
+                                                        id={`image_${num}`}
+                                                        name={`image_${num}`}
+                                                        onChange={handleImageChange}
+                                                        accept="image/*"
+                                                        className="file-input"
+                                                    />
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {error && <div className="error-message">{error}</div>}
+
+                                <div className='button-group'>
+                                    <button type="submit" disabled={isLoading} className="primary-button">
+                                        {isLoading ? 'Creating Campaign...' : 'Create Campaign'}
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setShowModal(false);
+                                            setIsCreatingCampaign(false);
+                                        }}
+                                        className="secondary-button"
+                                    >
+                                        Cancel
                                     </button>
                                 </div>
                             </form>

@@ -360,4 +360,15 @@
         flex-direction: column;
         gap: 0.5rem;
     }
+}
+
+.campaigns-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.campaigns-header h2 {
+    margin: 0;
 } 
