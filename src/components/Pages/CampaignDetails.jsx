@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../CSS/CampaignDetails.css'
-import { campaignService, userService } from '../../services/api'
+import { campaignService, userService, investmentService } from '../../services/api'
 import { useAuth } from '../../hooks/useAuth'
 import Navbar from '../Navbar'
 
@@ -18,6 +18,10 @@ function CampaignDetails() {
     const [userCampaigns, setUserCampaigns] = useState([]);
     const [userInvestments, setUserInvestments] = useState([]);
     const [userStats, setUserStats] = useState(null);
+    const [showInvestModal, setShowInvestModal] = useState(false);
+    const [investmentAmount, setInvestmentAmount] = useState('');
+    const [investmentError, setInvestmentError] = useState('');
+    const [isInvesting, setIsInvesting] = useState(false);
 
     useEffect(() => {
         loadCampaignDetails();
@@ -93,6 +97,58 @@ function CampaignDetails() {
                 setCurrentImageIndex((prevIndex) =>
                     prevIndex === 0 ? campaignImages.length - 1 : prevIndex - 1
                 );
+            }
+        }
+    };
+
+    const handleInvestment = async (e) => {
+        e.preventDefault();
+        setInvestmentError('');
+        setIsInvesting(true);
+
+        try {
+            if (!user) {
+                navigate('/login');
+                return;
+            }
+
+            const amount = parseFloat(investmentAmount);
+            if (isNaN(amount) || amount <= 0) {
+                setInvestmentError('Please enter a valid amount');
+                return;
+            }
+
+            const investmentData = {
+                user: user.id,
+                campaign: campaign.id,
+                invested_amount: amount.toString() // Convert to string for FormData
+            };
+
+            await investmentService.create(investmentData);
+            
+            // Refresh campaign details to show updated amount
+            loadCampaignDetails();
+            setShowInvestModal(false);
+            setInvestmentAmount('');
+        } catch (err) {
+            setInvestmentError(err.response?.data?.message || 'Investment failed. Please try again.');
+        } finally {
+            setIsInvesting(false);
+        }
+    };
+
+    const isOwner = campaign?.user === user?.id;
+
+    const handleDeleteCampaign = async () => {
+        if (window.confirm('Are you sure you want to delete this campaign? This action cannot be undone.')) {
+            try {
+                setIsLoading(true);
+                await campaignService.delete(campaign.id);
+                navigate('/profile');
+            } catch (err) {
+                setError('Failed to delete campaign');
+            } finally {
+                setIsLoading(false);
             }
         }
     };
@@ -244,16 +300,96 @@ function CampaignDetails() {
                     </div>
 
                     <div className='campaign-actions'>
-                        <button
-                            className='back-project-btn'
-                            onClick={handleInvest}
-                            disabled={!user}
-                        >
-                            {user ? 'BACK THIS PROJECT!' : 'LOGIN TO BACK THIS PROJECT'}
-                        </button>
+                        {isOwner ? (
+                            <div className='owner-actions'>
+                                <button 
+                                    className='primary-button'
+                                    onClick={() => navigate(`/campaign/${campaign.id}/edit`)}
+                                >
+                                    Edit Campaign
+                                </button>
+                                <button 
+                                    className='delete-button'
+                                    onClick={handleDeleteCampaign}
+                                    disabled={isLoading}
+                                >
+                                    {isLoading ? 'Deleting...' : 'Delete Campaign'}
+                                </button>
+                            </div>
+                        ) : (
+                            <button 
+                                className='primary-button large'
+                                onClick={() => setShowInvestModal(true)}
+                            >
+                                Back this project
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
+
+            {/* Updated Investment Modal */}
+            {showInvestModal && (
+                <div className='modal-overlay'>
+                    <div className='modal-content investment-modal'>
+                        <button className='modal-close-btn' onClick={() => setShowInvestModal(false)}>×</button>
+                        <div className='modal-header'>
+                            <h2>Back this project</h2>
+                        </div>
+                        <div className='modal-body'>
+                            <div className='investment-stats'>
+                                <div className='stat-item'>
+                                    <h3>Campaign Goal</h3>
+                                    <p className='amount'>₹{campaign.required_amount}</p>
+                                </div>
+                                <div className='stat-item'>
+                                    <h3>Amount Raised</h3>
+                                    <p className='amount'>₹{campaign.amount_generated}</p>
+                                </div>
+                                <div className='stat-item'>
+                                    <h3>Remaining</h3>
+                                    <p className='amount'>₹{campaign.required_amount - campaign.amount_generated}</p>
+                                </div>
+                            </div>
+
+                            <form onSubmit={handleInvestment} className='investment-form'>
+                                <div className='form-group'>
+                                    <label htmlFor='investment-amount'>Enter your contribution amount (₹)</label>
+                                    <input
+                                        type='number'
+                                        id='investment-amount'
+                                        value={investmentAmount}
+                                        onChange={(e) => setInvestmentAmount(e.target.value)}
+                                        min='1'
+                                        step='0.01'
+                                        required
+                                        className='form-control large'
+                                    />
+                                </div>
+                                {investmentError && (
+                                    <div className='error-message'>{investmentError}</div>
+                                )}
+                                <div className='button-group'>
+                                    <button
+                                        type='submit'
+                                        className='primary-button large'
+                                        disabled={isInvesting}
+                                    >
+                                        {isInvesting ? 'Processing...' : 'Confirm Contribution'}
+                                    </button>
+                                    <button
+                                        type='button'
+                                        className='secondary-button large'
+                                        onClick={() => setShowInvestModal(false)}
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

@@ -633,3 +633,59 @@
     background-color: #dc354580;
     cursor: not-allowed;
 }
+
+.investments-modal {
+    max-width: 800px;
+    width: 90%;
+}
+
+.investments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.investment-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+}
+
+.investment-item .campaign-thumbnail {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.investment-item .investment-details {
+    flex: 1;
+}
+
+.investment-item h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.investment-item .amount {
+    font-size: 20px;
+    font-weight: bold;
+    color: #28a745;
+}
+
+.investment-item .date {
+    color: #666;
+    font-size: 14px;
+}
+
+.investment-item .view-button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}

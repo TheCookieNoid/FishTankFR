@@ -80,7 +80,18 @@ export const campaignService = {
 
 // Investment APIs
 export const investmentService = {
-  create: (investmentData) => api.post('/investments/', investmentData),
+  create: (investmentData) => {
+    const formData = new FormData();
+    Object.keys(investmentData).forEach(key => {
+      formData.append(key, investmentData[key]);
+    });
+    
+    return api.post('/investments/', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      }
+    });
+  },
   list: () => api.get('/investments/'),
   get: (investmentId) => api.get(`/investments/${investmentId}/`),
   delete: (investmentId) => api.delete(`/investments/${investmentId}/`),

@@ -45,6 +45,8 @@ function Profile() {
         image_4: null
     });
     const [isCreatingCampaign, setIsCreatingCampaign] = useState(false);
+    const [investments, setInvestments] = useState([]);
+    const [showInvestments, setShowInvestments] = useState(false);
 
     useEffect(() => {
         if (user) {
@@ -57,6 +59,7 @@ function Profile() {
                 profile_picture: null
             });
             loadUserCampaigns();
+            loadUserInvestments();
         }
     }, [user]);
 
@@ -102,6 +105,15 @@ function Profile() {
             setCampaigns(response.data);
         } catch (err) {
             setError('Failed to load campaigns');
+        }
+    };
+
+    const loadUserInvestments = async () => {
+        try {
+            const response = await userService.getUserInvestments(user.id);
+            setInvestments(response.data);
+        } catch (err) {
+            console.error('Failed to load investments:', err);
         }
     };
 
@@ -655,9 +667,9 @@ function Profile() {
                         <p>{campaigns.length}</p>
                     </div>
                     <hr />
-                    <div id='backed-section'>
+                    <div id='backed-section' onClick={() => setShowInvestments(true)}>
                         <p>Backed</p>
-                        <p>0</p>
+                        <p>{investments.length}</p>
                     </div>
                 </div>
             </div>
@@ -1196,6 +1208,48 @@ function Profile() {
                                     </button>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Investments Modal */}
+            {showInvestments && (
+                <div className='modal-overlay'>
+                    <div className='modal-content investments-modal'>
+                        <button className='modal-close-btn' onClick={() => setShowInvestments(false)}>×</button>
+                        <div className='modal-header'>
+                            <h2>Your Investments</h2>
+                        </div>
+                        <div className='modal-body'>
+                            {investments.length === 0 ? (
+                                <p>You haven't backed any projects yet.</p>
+                            ) : (
+                                <div className='investments-list'>
+                                    {investments.map(investment => (
+                                        <div key={investment.id} className='investment-item'>
+                                            <img 
+                                                src={investment.campaign.main_image} 
+                                                alt={investment.campaign.title}
+                                                className='campaign-thumbnail'
+                                            />
+                                            <div className='investment-details'>
+                                                <h3>{investment.campaign.title}</h3>
+                                                <p className='amount'>₹{investment.invested_amount}</p>
+                                                <p className='date'>
+                                                    Invested on {new Date(investment.investment_date).toLocaleDateString()}
+                                                </p>
+                                            </div>
+                                            <button 
+                                                className='view-button'
+                                                onClick={() => navigate(`/campaign/${investment.campaign.id}`)}
+                                            >
+                                                View Campaign
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
